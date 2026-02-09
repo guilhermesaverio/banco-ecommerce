@@ -51,3 +51,42 @@ FROM ItemPedido ip
 INNER JOIN Produto p ON ip.id_produto = p.id_produto
 GROUP BY p.descricao
 ORDER BY total_vendido DESC;
+
+-- Pedidos ABERTO com valor total e cliente
+SELECT c.id_cliente, c.nome, p.valor_total
+FROM Clientes c
+INNER JOIN Pedido p ON p.id_cliente = c.id_cliente
+WHERE p.status = 'ABERTO'
+
+-- Produtos com pouco estoque, para ter reposição
+SELECT descricao, quantidade_estoque
+FROM Produto
+WHERE quantidade_estoque <= 5;
+
+--Pedidos com valor total maior que a média dos pedidos:
+SELECT id_pedido, valor_total
+FROM Pedido 
+WHERE valor_total > (SELECT AVG (valor_total) FROM Pedido)
+
+-- Clientes que nunca fizeram pedidos:
+SELECT c.id_cliente, c.nome 
+FROM Clientes c
+LEFT JOIN pedido p ON p.id_cliente = c.id_cliente
+WHERE p.id_pedido IS NULL
+
+--Produtos nunca vendidos:
+SELECT pr.descricao
+FROM Produto pr
+LEFT JOIN ItemPedido ip ON pr.id_produto = ip.id_produto
+WHERE ip.id_item_pedido IS NULL;
+
+-- Número de pedidos por cliente:
+SELECT c.nome, COUNT(p.id_pedido) AS total_pedidos
+FROM Clientes c
+LEFT JOIN Pedido p ON c.id_cliente = p.id_cliente
+GROUP BY c.nome;
+
+--Valor médio de pedidos por status:
+SELECT status, AVG(valor_total) AS media_valor
+FROM Pedido
+GROUP BY status;
