@@ -1,6 +1,6 @@
 # E-commerce Database
 
-Este projeto contém o **schema do banco de dados** para um sistema de e-commerce, incluindo tabelas de clientes, produtos, pedidos e categorias.
+Este projeto contém o **schema, inserts, query e algumas views para teste e  do banco de dados** para um sistema de e-commerce, incluindo tabelas de clientes, produtos, pedidos e categorias.
 
 ## Tabelas principais
 
